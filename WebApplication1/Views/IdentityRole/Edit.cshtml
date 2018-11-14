@@ -1,0 +1,18 @@
+﻿@model System.Threading.Tasks.Task<Microsoft.AspNetCore.Identity.IdentityRole>
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>title</title>
+</head>
+<body>
+<div>
+    <form action="Update" method="post">
+        <label>Name</label>
+        <input type="text" name="name" value="@Model.Result.Name"/>
+        <input type="submit" value="submit"/>
+    </form>
+</div>
+</body>
+</html>

@@ -1,0 +1,19 @@
+﻿@model System.Collections.Generic.List<Microsoft.AspNetCore.Identity.IdentityRole>
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>title</title>
+</head>
+<body>
+    <div>
+        <ul>
+            @foreach (var role in Model)
+            {
+                <li>@role.Id - @role.Name</li>
+            }
+        </ul>
+</div>
+</body>
+</html>

@@ -36,36 +36,53 @@ namespace WebApplication1.Controllers
             return StatusCode(500);
         }
 
-        public IActionResult Edit(string Id)
+        public IActionResult Edit(IdentityRole identityRole)
         {
-            var exitsRole = _roleManager.FindByIdAsync(Id);
-            if (exitsRole == null)
+            if (identityRole.Id == null)
             {
                 return NotFound();
             }
-            return View(exitsRole);
+            var result = _roleManager.FindByIdAsync(identityRole.Id);
+            if (result == null)
+            {
+                return NotFound();
+            }
+            return View(result);
         }
 
-        public IActionResult Update(IdentityRole identityRole)
+        [HttpPost]
+        public async Task<IActionResult> Update(IdentityRole identity)
         {
-            var exitsRole = _roleManager.FindByIdAsync(identityRole.Id);
-            if (exitsRole == null)
+            try
             {
-                return NotFound();
+                var role = await _roleManager.FindByIdAsync(identity.Id);
+                if (role != null)
+                {
+                    role.Name = identity.Name;
+                    System.Diagnostics.Debug.WriteLine(identity.Name);
+                    var result = await _roleManager.UpdateAsync(role);
+                }
+                return RedirectToAction(nameof(Index));
             }
-            exitsRole.Result.Name = identityRole.Name;
-            _roleManager.UpdateAsync(identityRole);
-            return Redirect("Index");
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine(e);
+                return Json(e);
+            }
         }
 
-        public IActionResult Delete(string Id)
+        public async Task<ActionResult> Delete(string id, string name)
         {
-            var exitsRole = _roleManager.FindByIdAsync(Id);
-            if (exitsRole == null)
+            var role = await _roleManager.FindByIdAsync(id);
+            if (role != null)
             {
-                return NotFound();
+                role.Name = name;
+                var result = await _roleManager.DeleteAsync(role);
             }
-            return Redirect("Index");
+
+            return RedirectToAction(nameof(Index));
+
+
         }
 
 

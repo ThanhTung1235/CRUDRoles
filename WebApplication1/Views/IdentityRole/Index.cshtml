@@ -7,13 +7,17 @@
     <title>title</title>
 </head>
 <body>
+<div>
     <div>
-        <ul>
-            @foreach (var role in Model)
-            {
-                <li>@role.Id - @role.Name</li>
-            }
-        </ul>
-</div>
+        <a href="/IdentityRole/Create">Add new</a>
+    </div>
+    <ul>
+        @foreach (var role in Model)
+        {
+            <li>@role.Id - @role.Name <a href="/IdentityRole/Edit/@role.Id">Edit</a> - <a class="btn-delete" id="@role.Id">Delete</a></li>
+        }
+    </ul>
+</div
+    
 </body>
 </html>
